@@ -1,26 +1,39 @@
 import React from 'react';
-import logo from './logo.svg';
-import './App.css';
+import 'bootstrap/dist/css/bootstrap.css';
+import Input from './components/input.js';
+import Output from './components/output.js';
+import Navbar from './components/navbar.js';
+import axios from 'axios';
+class App extends React.Component {
+  state={
+    values : {},
+    message :''
+  };
+  handleSubmit = (values) =>{
+    this.setState({values});
+    this.handleEvent();
+  };
+  handleEvent = () => {
+    const values = this.state.values;
+    axios.post("http://localhost:9000/",{values})
+    .then(res => {
+      this.setState({message:res.data});
+      console.log(this.state.message);
+    })
+    .catch((err) => {
+      this.setState({message:"Couldnot connect with server!"});
+    })
 
-function App() {
-  return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
-  );
+  };
+  render(){
+    return (
+      <div className="App">
+        <Navbar/>
+        <Input onSub={this.handleSubmit}/>
+        <Output message={this.state.message}/>
+      </div>
+    );
+  }
 }
 
 export default App;
