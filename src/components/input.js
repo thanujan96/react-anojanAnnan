@@ -1,5 +1,6 @@
 
 import 'bootstrap/dist/css/bootstrap.css';
+import 'bootstrap/dist/js/bootstrap.js';
 import 'font-awesome/css/font-awesome.min.css';
 import './components.css'
 import React, { Component } from 'react';
@@ -8,6 +9,7 @@ import CoordinateInput from 'react-coordinate-input';
 export default function Input(props) {
       const { register, handleSubmit, control, watch, errors } = useForm();
       const onSubmit = data =>{
+        console.log(data);
         props.onSub(data);
       };
         return (
@@ -61,7 +63,10 @@ export default function Input(props) {
                       <label htmlFor="location" className="col-sm-4 col-form-label " >Location</label>
                       <div className="col-sm-8">
                       <div className="input-group mb-3">
-                       <Controller as={CoordinateInput} rules={{ required: true }} name="location" control={control} defaultValue="" />
+                        <select className="custom-select custom-select-sm" ref={register({ required: true})} name="location">
+                            <option defaultValue value=''>Open this select menu</option>
+                            {props.locations.map((location) =>  <option value={location.value} key={location.value}> {location.name}</option>)}
+                        </select>
                       <span>{errors.location && <i className="fa fa-exclamation-circle Icon"></i>}</span>
                       </div>
                       </div>

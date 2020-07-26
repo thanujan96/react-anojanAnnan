@@ -7,13 +7,24 @@ import axios from 'axios';
 import serverUrl from './config';
 class App extends React.Component {
   state={
-    values : {},
+    values : {},//{ landSize: "13", numOfBed: "324", numOfBath: "23", houseSize: "23", location: "234" }
+    locations:[],//{name:"Srilanka",value:234}
     message :''
   };
+  componentDidMount() {
+    console.log('Component did mount!')
+    axios.get(serverUrl)
+    .then(res => {
+      this.setState({locations:res.data})
+    })
+    .catch(err => { console.log("locations list not get")});
+  };
+
   handleSubmit = (values) =>{
     this.setState({values});
     this.handleEvent();
   };
+
   handleEvent = () => {
     const values = this.state.values;
     axios.post(serverUrl,{values})
@@ -30,7 +41,7 @@ class App extends React.Component {
     return (
       <div className="App">
         <Navbar/>
-        <Input onSub={this.handleSubmit}/>
+        <Input onSub={this.handleSubmit} locations={this.state.locations}/>
         <Output message={this.state.message}/>
       </div>
     );
