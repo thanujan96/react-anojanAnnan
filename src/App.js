@@ -7,10 +7,13 @@ import axios from 'axios';
 import serverUrl from './config';
 class App extends React.Component {
   state={
-    values : {},//{ landSize: "13", numOfBed: "324", numOfBath: "23", houseSize: "23", location: "234" }
-    locations:[],//{name:"Srilanka",value:234}
+    values : {},//{ land_size: "23", beds: "23", baths: "23", house_size: "12", location: "2342" }
+    locations:[{name:"kandy",value:2342},{name:"colombo",value:23324},{name:"vauniya",value:2334}],//{name:"Srilanka",value:234}
     message :''
   };
+
+  //get locations data from server
+  /*
   componentDidMount() {
     console.log('Component did mount!')
     axios.get(serverUrl)
@@ -18,7 +21,7 @@ class App extends React.Component {
       this.setState({locations:res.data})
     })
     .catch(err => { console.log("locations list not get")});
-  };
+  };*/
 
   handleSubmit = (values) =>{
     this.setState({values});
