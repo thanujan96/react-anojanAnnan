@@ -4,6 +4,7 @@ import Input from './components/input.js';
 import Output from './components/output.js';
 import Navbar from './components/navbar.js';
 import axios from 'axios';
+import serverUrl from './config';
 class App extends React.Component {
   state={
     values : {},
@@ -15,7 +16,7 @@ class App extends React.Component {
   };
   handleEvent = () => {
     const values = this.state.values;
-    axios.post("http://localhost:9000/",{values})
+    axios.post(serverUrl,{values})
     .then(res => {
       this.setState({message:res.data});
       console.log(this.state.message);
